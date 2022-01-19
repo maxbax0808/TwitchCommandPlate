@@ -13,7 +13,7 @@ const tmi_password = config.get('tmi.OAuth')
 const channels = config.get('plates')
 
 ipcMain.on('config-send', (event, arg) => { //sending config to renderer
-  event.reply('config-reply', channels)
+  event.reply('config-reply', config.get('plates'))
 })
 
 //console.log(channels)
@@ -33,7 +33,7 @@ const client = new tmi.Client({
 client.connect()
 ipcMain.on('connected-send', (event, arg) => {
   console.log(arg) // prints "ping"
-  event.reply('connected-reply', "connected")
+  event.reply('connected-reply', "Connected")
 })
 // Add this in your main.js file to see when a user click on the button from main process
 ipcMain.on("button-clicked", (event, data) => {
@@ -43,13 +43,7 @@ ipcMain.on("button-clicked", (event, data) => {
 
 client.on('message', (channel, tags, message, self) => {
 	// Ignore echoed messages.
-	if(self) return;
-
-	if(message.toLowerCase() === '!hello') {
-		// "@alca, heya!"
-		client.say(channel, `@${tags.username}, heya!`);
-	}
-    
+	if(self) return; 
 });
 
 
