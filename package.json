@@ -1,0 +1,20 @@
+{
+  "name": "twitchcommandplate",
+  "version": "0.0.1",
+  "description": "Electron App using tmi, giving the User a command Plate",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Max Kusatz",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^16.0.7"
+  },
+  "dependencies": {
+    "config": "^3.3.7",
+    "electron-reload": "^2.0.0-alpha.1",
+    "tmi.js": "^1.8.5"
+  }
+}

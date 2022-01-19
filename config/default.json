@@ -1,0 +1,27 @@
+{
+   "tmi": {
+        "username": "maxbax0808",
+        "OAuth": "oauth:6q0x5ebzqbk4l35oulsr5ua6wfupfr"
+    },
+    "plates": {
+        "nrChannels": 2,
+        "channels": [
+            {"name":"fettarmqp",
+             "nrPlates": 3,
+             "plate":[
+                    "!play",
+                    "peepoHey",
+                    "Hallo Ferdi!"
+             ]},
+            {
+                "name":"maxbax0808",
+                "channelName": "maxbax0808",
+                "nrPlates": 2,
+                "plate":[
+                    "Hallo",
+                    "test"
+                ]
+            }
+        ]    
+    }
+}
