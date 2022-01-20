@@ -1,30 +1,44 @@
 const { app, BrowserWindow, ipcMain, ipcRenderer } = require('electron')
 const path = require('path')
-const config = require('config');
 const tmi = require('tmi.js');
+const Store = require('electron-store');
 
+const store = new Store();
+
+console.log(app.getPath('userData'))
 require('electron-reload')(__dirname, {
   // Note that the path to electron may vary according to the main file
   electron: require(`${__dirname}/node_modules/electron`)
 });
 
-const tmi_username = config.get('tmi.username')
-const tmi_password = config.get('tmi.OAuth')
-const channels = config.get('plates')
+
+const tmiConf = store.get('tmi')
+const channels = store.get('plates')
 
 ipcMain.on('config-send', (event, arg) => { //sending config to renderer
-  event.reply('config-reply', config.get('plates'))
+  if(!store.has('tmi')){
+    event.reply('config-reply', 'send-to-config')
+  }
+  event.reply('config-reply', store.get('plates'))
+})
+ipcMain.on('save-config', (event, arg) => {
+  store.set("plates", arg)
+})
+ipcMain.on('set-tmi', (event, arg) => {
+  store.set("tmi", arg)
+  console.log("updated tmi config")
+})
+ipcMain.on('get-tmi', (event, arg) => {
+  event.reply('get-tmi', tmiConf)
 })
 
-//console.log(channels)
-
-console.log("connecting as " + tmi_username)
+console.log("connecting as " + tmiConf.username)
 
 const client = new tmi.Client({
 	options: { debug: true },
 	identity: {
-		username: tmi_username,
-		password: tmi_password
+		username: tmiConf.username,
+		password: tmiConf.OAuth
 	},
 	channels: [ 'maxbax0808' ]
 });
@@ -32,7 +46,6 @@ const client = new tmi.Client({
 
 client.connect()
 ipcMain.on('connected-send', (event, arg) => {
-  console.log(arg) // prints "ping"
   event.reply('connected-reply', "Connected")
 })
 // Add this in your main.js file to see when a user click on the button from main process
