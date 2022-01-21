@@ -73,6 +73,9 @@
     height: 100%;
     
   }
+  .edit{
+    background-color: red;
+  }
   .connected {
     position: fixed;
     bottom: 0px;
@@ -80,4 +83,8 @@
   }
   input {
     background-color: rgb(48, 48, 48);
+    color: white;
+  }
+  .command{
+    background-color: white;
   }
