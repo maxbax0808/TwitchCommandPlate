@@ -2,53 +2,66 @@ const { app, BrowserWindow, ipcMain, ipcRenderer } = require('electron')
 const path = require('path')
 const tmi = require('tmi.js');
 const Store = require('electron-store');
+const { platform } = require('os');
 
 const store = new Store();
+store.set('','')
 
 console.log(app.getPath('userData'))
-//require('electron-reload')(__dirname, {
+require('electron-reload')(__dirname, {
   // Note that the path to electron may vary according to the main file
-//  electron: require(`${__dirname}/node_modules/electron`)
-//});
+  electron: require(`${__dirname}/node_modules/electron`)
+});
 
-if(!store.has('tmi')){
-    
+
+var tmiConnected = false
+var hasTMIConfig = false
+if(store.has('tmi')){
+      hasTMIConfig = true
 }
-const tmiConf = store.get('tmi')
-const channels = store.get('plates')
+if(!store.has('plates')){
+  store.set('plates', {
+		"nrChannels": 0,
+		"channels":[]})
+}
+var tmiConf = store.get('tmi')
+var channels = store.get('plates')
 
-ipcMain.on('config-send', (event, arg) => { //sending config to renderer
-  if(!store.has('tmi')){
-    event.reply('config-reply', 'send-to-config')
-  }
+ipcMain.on('config-send', (event, arg) => {
   event.reply('config-reply', store.get('plates'))
 })
 ipcMain.on('save-config', (event, arg) => {
   store.set("plates", arg)
 })
+
 ipcMain.on('set-tmi', (event, arg) => {
   store.set("tmi", arg)
+  tmiConf = arg
   console.log("updated tmi config")
+  hasTMIConfig = true
+  loadTMI()
 })
 ipcMain.on('get-tmi', (event, arg) => {
-  event.reply('get-tmi', tmiConf)
+  if(hasTMIConfig){
+    event.reply('get-tmi', tmiConf)
+  } else {
+    event.reply('get-tmi', {"username": "", "OAuth": ""})
+  }
+})
+ipcMain.on('has-tmi', (event, arg) =>{
+  event.reply('has-tmi', hasTMIConfig)
 })
 
-console.log("connecting as " + tmiConf.username)
-
-const client = new tmi.Client({
-	options: { debug: true },
-	identity: {
-		username: tmiConf.username,
-		password: tmiConf.OAuth
-	},
-	channels: []
+var client = new tmi.Client({
+  options: { debug: true },
+  channels: []
 });
 
-
-client.connect()
+if(hasTMIConfig){
+  loadTMI()
+}
 ipcMain.on('connected-send', (event, arg) => {
-  event.reply('connected-reply', "Connected")
+  event.reply('connected-reply', client.readyState())
 })
 // Add this in your main.js file to see when a user click on the button from main process
 ipcMain.on("button-clicked", (event, data) => {
@@ -91,3 +104,17 @@ const createWindow = () => {
     if (process.platform !== 'darwin') app.quit()
   })
 
+function loadTMI(){
+  console.log("connecting as " + tmiConf.username)
+  client = new tmi.Client({
+    options: { debug: true },
+    identity: {
+      username: tmiConf.username,
+      password: tmiConf.OAuth
+    },
+    channels: []
+  });
+
+  client.connect()
+  tmiConnected = true
+}

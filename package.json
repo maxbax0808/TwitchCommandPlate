@@ -1,6 +1,6 @@
 {
   "name": "twitchcommandplate",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "Command Plate for Twitch",
   "main": "main.js",
   "scripts": {
@@ -24,11 +24,11 @@
   "license": "MIT",
   "devDependencies": {
     "electron": "^16.0.7",
-    "electron-builder": "^22.14.5"
+    "electron-builder": "^22.14.5",
+    "electron-reload": "^2.0.0-alpha.1"
   },
   "dependencies": {
     "electron-store": "^8.0.1",
-    "tmi": "^2.0.0",
     "tmi.js": "^1.8.5"
   }
 }

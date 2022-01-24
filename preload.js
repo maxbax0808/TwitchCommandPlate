@@ -193,6 +193,13 @@ function buildUi(active) {
 }
 
 function buildEdit(active){
+  if(plates.nrChannels == 0){
+    document.getElementById("tab").innerHTML += "<button class=\"tablinks\" onclick=\"openTab(event, 'addTab')\">+</button>"
+    document.getElementById("tabs").innerHTML += "<div id='addTab' class='tabcontent'> Channelname to add: <input type='text' id='addChannelName' class='btn btn-lg command'><button id='addChannelButton' class='btn btn-lg'>Add</button></div>"
+    document.getElementById("addPlate").innerHTML = "<br/><p>Add Plate:</p><p><input type='text' id='addPlateInput' class='btn btn-lg command' ><button id='addPlateButton' class='btn btn-lg'>+</button></p>"
+    document.getElementById("addPlate").innerHTML += "<p><button id='deleteChannelButton' class='btn btn-lg' style='background-color: red;'>DELTE CHANNEL</button></p><br/>"
+    return
+  }
   if(typeof active==='undefined'){
     active = plates.channels[0].name
   }
@@ -224,6 +231,3 @@ function buildEdit(active){
   document.getElementById("addPlate").innerHTML = "<br/><p>Add Plate:</p><p><input type='text' id='addPlateInput' class='btn btn-lg command' ><button id='addPlateButton' class='btn btn-lg'>+</button></p>"
   document.getElementById("addPlate").innerHTML += "<p><button id='deleteChannelButton' class='btn btn-lg' style='background-color: red;'>DELTE CHANNEL</button></p><br/>"
 }
-
-
-
