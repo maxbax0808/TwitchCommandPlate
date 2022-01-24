@@ -8,7 +8,11 @@
   </head>
   <body>
     <div class="wrapper">
-    <script type="text/javascript" src="./renderer.js" defer></script>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    
+
+    <div id="app">{{message}}</div>
     
        <!-- Tab links -->
 <div class="tab" id="tab">
@@ -24,5 +28,15 @@
     <script type="text/javascript" src="./tabs.js" ></script>
   </div>
   <div id="connected" class="connected">NOT connected</div>
+  
+  
+  <script type="text/javascript">
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue!'
+      }
+    })
+  </script>
   </body>
 </html>

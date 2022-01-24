@@ -6,12 +6,14 @@ const Store = require('electron-store');
 const store = new Store();
 
 console.log(app.getPath('userData'))
-require('electron-reload')(__dirname, {
+//require('electron-reload')(__dirname, {
   // Note that the path to electron may vary according to the main file
-  electron: require(`${__dirname}/node_modules/electron`)
-});
+//  electron: require(`${__dirname}/node_modules/electron`)
+//});
 
-
+if(!store.has('tmi')){
+    
+}
 const tmiConf = store.get('tmi')
 const channels = store.get('plates')
 
@@ -40,7 +42,7 @@ const client = new tmi.Client({
 		username: tmiConf.username,
 		password: tmiConf.OAuth
 	},
-	channels: [ 'maxbax0808' ]
+	channels: []
 });
 
 

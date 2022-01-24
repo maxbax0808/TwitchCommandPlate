@@ -1,34 +1,34 @@
 {
   "name": "twitchcommandplate",
-  "version": "0.0.1",
-  "description": "Electron App using tmi, giving the User a command Plate",
+  "version": "1.0.0",
+  "description": "Command Plate for Twitch",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dist": "electron-builder"
-  },
-  "author": "Max Kusatz",
-  "license": "MIT",
-  "devDependencies": {
-    "electron": "^16.0.7",
-    "electron-builder": "^22.14.5",
-    "electron-packager": "^15.4.0"
-  },
-  "dependencies": {
-    "config": "^3.3.7",
-    "electron-reload": "^2.0.0-alpha.1",
-    "electron-store": "^8.0.1",
-    "tmi": "^2.0.0",
-    "tmi.js": "^1.8.5"
+    "start": "electron .",
+    "app:dir": "electron-builder --dir",
+    "app:dist": "electron-builder"
   },
   "build": {
-    "appId": "com.maxbax0808.TwitchCommandPlate",
-    "productName": "Twitch Command Plate",
+    "appId": "TwitchCommandPlate",
+    "mac": {
+      "category": "your.app.category.type"
+    },
     "target": "NSIS",
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
     }
+  },
+  "author": "Max Kusatz",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^16.0.7",
+    "electron-builder": "^22.14.5"
+  },
+  "dependencies": {
+    "electron-store": "^8.0.1",
+    "tmi": "^2.0.0",
+    "tmi.js": "^1.8.5"
   }
 }
