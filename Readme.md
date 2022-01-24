@@ -9,6 +9,6 @@ npm install
 npm run
 ```
 
-You can also install using the files under Releases
+You can also install using the files under [Releases](https://github.com/maxbax0808/TwitchCommandPlate/releases)
 
 ##
